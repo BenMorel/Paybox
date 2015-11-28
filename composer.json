@@ -1,0 +1,27 @@
+{
+  "name": "benmorel/paybox",
+  "description": "Client library for the Paybox payment gateway",
+  "type": "library",
+  "keywords": [
+    "Paybox",
+    "E-transactions",
+    "Payment",
+    "Card"
+  ],
+  "license": "MIT",
+  "require": {
+    "php": ">=5.5",
+    "brick/money": "dev-master",
+    "guzzlehttp/guzzle": "6.*"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "*",
+    "satooshi/php-coveralls": "dev-master"
+  },
+  "autoload": {
+    "psr-4": {
+      "Paybox\\": "src/",
+      "Paybox\\Tests\\": "tests/"
+    }
+  }
+}
