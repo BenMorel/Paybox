@@ -6,7 +6,7 @@ use Paybox\Request;
 use Brick\Money\Money;
 
 /**
- * Cancel.
+ * Cancels a captured transaction.
  */
 class Cancel implements Request
 {
