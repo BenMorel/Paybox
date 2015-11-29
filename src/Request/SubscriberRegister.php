@@ -28,7 +28,7 @@ class SubscriberRegister implements Request
 
     /**
      * @param Card   $card      The payment card.
-     * @param Money  $amount    The amount to authorize.
+     * @param Money  $amount    The amount to authorize. @todo not sure yet why an amount is required.
      * @param string $reference The subscriber reference, free field from 1 to 250 characters.
      *                          Must be unique across all subscribers.
      */
@@ -45,7 +45,7 @@ class SubscriberRegister implements Request
     public function getValues()
     {
         return [
-            'TYPE' => '00056',
+            'TYPE'      => '00056',
             'REFABONNE' => $this->reference,
             'MONTANT'   => $this->amount->getAmount()->unscaledValue(),
             'DEVISE'    => $this->amount->getCurrency()->getNumericCode(),

@@ -17,7 +17,7 @@ class SubscriberDelete implements Request
     /**
      * SubscriberDelete constructor.
      *
-     * @param string $reference The subscriber reference.
+     * @param string $reference The reference of the subscriber to delete.
      *                          This is the free field reference used when creating the subscriber.
      */
     public function __construct($reference)
