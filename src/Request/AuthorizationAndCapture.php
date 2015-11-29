@@ -28,7 +28,7 @@ class AuthorizationAndCapture implements Request
 
     /**
      * @param Card   $card      The payment card.
-     * @param Money  $amount    The amount to authorize.
+     * @param Money  $amount    The amount to debit.
      * @param string $reference The merchant reference, free field from 1 to 250 characters.
      */
     public function __construct(Card $card, Money $amount, $reference)
