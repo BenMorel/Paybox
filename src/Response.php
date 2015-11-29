@@ -188,12 +188,12 @@ class Response
     /**
      * @var string
      */
-    private $refabonne = '';
+    private $subscriberReference = '';
 
     /**
      * @var string
      */
-    private $porteur = '';
+    private $token = '';
 
     /**
      * Response constructor.
@@ -211,8 +211,8 @@ class Response
             'AUTORISATION' => 'autorisation',
             'CODEREPONSE'  => 'codereponse',
             'COMMENTAIRE'  => 'commentaire',
-            'REFABONNE'    => 'refabonne',
-            'PORTEUR'      => 'porteur'
+            'REFABONNE'    => 'subscriberReference',
+            'PORTEUR'      => 'token'
         ];
 
         foreach ($map as $key => $field) {
@@ -299,18 +299,26 @@ class Response
     }
 
     /**
+     * Returns the subscriber reference.
+     *
+     * Empty for non subscription related responses.
+     *
      * @return string
      */
-    public function getRefabonne()
+    public function getSubscriberReference()
     {
-        return $this->refabonne;
+        return $this->subscriberReference;
     }
 
     /**
+     * Returns the subscription token.
+     *
+     * Only set when registering or updating a subscription, empty otherwise.
+     *
      * @return string
      */
-    public function getPorteur()
+    public function getToken()
     {
-        return $this->porteur;
+        return $this->token;
     }
 }
