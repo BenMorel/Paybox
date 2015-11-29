@@ -33,10 +33,10 @@ class Capture implements Request
     /**
      * Capture constructor.
      *
-     * @param Money  $amount
-     * @param string $reference
-     * @param string $numappel
-     * @param string $numtrans
+     * @param Money  $amount    The amount to capture. Must be lower than or equal to the authorized amount.
+     * @param string $reference The merchant reference of the transaction to capture.
+     * @param string $numappel  The value returned in response to Authorization.
+     * @param string $numtrans  The value returned in response to Authorization.
      */
     public function __construct(Money $amount, $reference, $numappel, $numtrans)
     {

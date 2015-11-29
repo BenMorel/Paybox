@@ -10,7 +10,6 @@ use Brick\Money\Money;
  */
 class SubscriberCancel implements Request
 {
-
     /**
      * @var Money
      */
@@ -49,14 +48,14 @@ class SubscriberCancel implements Request
     /**
      * SubscriberAuthorization constructor.
      *
-     * @param Money  $amount              The exact amount of the transaction to cancel.
+     * @param Money  $amount              The captured amount of the transaction to cancel.
      * @param string $paymentReference    The merchant reference of the transaction to cancel.
      * @param string $subscriberReference The reference of the subscriber.
      *                                    This is the free field reference used when creating the subscriber.
      * @param string $token               The token returned in response to SubscriberRegister.
      * @param string $validity            The card validity date, in MMYY format.
-     * @param string $numappel
-     * @param string $numtrans
+     * @param string $numappel            The value returned in response to SubscriberCapture or SubscriberAuthorizationAndCapture.
+     * @param string $numtrans            The value returned in response to SubscriberCapture or SubscriberAuthorizationAndCapture.
      */
     public function __construct(Money $amount, $paymentReference, $subscriberReference, $token, $validity, $numappel, $numtrans)
     {
