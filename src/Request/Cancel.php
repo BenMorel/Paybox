@@ -33,8 +33,8 @@ class Cancel implements Request
     /**
      * Cancel constructor.
      *
-     * @param Money  $amount
-     * @param string $reference
+     * @param Money  $amount    The exact amount of the transaction to cancel.
+     * @param string $reference The merchant reference of the transaction to cancel.
      * @param string $numappel
      * @param string $numtrans
      */
