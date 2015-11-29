@@ -205,7 +205,7 @@ class Response
         $map = [
             'NUMTRANS'     => 'numtrans',
             'NUMAPPEL'     => 'numappel',
-            'NUMQUESTION'  => 'nnumquestion',
+            'NUMQUESTION'  => 'numquestion',
             'SITE'         => 'site',
             'RANG'         => 'rang',
             'AUTORISATION' => 'autorisation',
