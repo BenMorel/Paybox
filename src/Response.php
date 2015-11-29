@@ -192,6 +192,11 @@ class Response
     private $token = '';
 
     /**
+     * @var string
+     */
+    private $status = '';
+
+    /**
      * Response constructor.
      *
      * @param array $data An associative array of data as returned by the Paybox server.
@@ -208,7 +213,8 @@ class Response
             'CODEREPONSE'  => 'codereponse',
             'COMMENTAIRE'  => 'commentaire',
             'REFABONNE'    => 'subscriberReference',
-            'PORTEUR'      => 'token'
+            'PORTEUR'      => 'token',
+            'STATUS'       => 'status',
         ];
 
         foreach ($map as $key => $field) {
@@ -316,5 +322,15 @@ class Response
     public function getToken()
     {
         return $this->token;
+    }
+
+    /**
+     * Returns the status of the transaction, as a result to an Inquire request.
+     *
+     * @return string
+     */
+    public function getStatus()
+    {
+        return $this->status;
     }
 }
