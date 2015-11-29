@@ -36,14 +36,14 @@ class SubscriberCapture implements Request
     private $numtrans;
 
     /**
-     * Capture constructor.
+     * SubscriberCapture constructor.
      *
      * @param Money  $amount              The amount to capture. Must be lower than or equal to the authorized amount.
      * @param string $paymentReference    The merchant reference of the transaction to capture.
      * @param string $subscriberReference The reference of the subscriber.
      *                                    This is the free field reference used when creating the subscriber.
-     * @param string $numappel            The value returned in response to SubscriberAuthorization.
-     * @param string $numtrans            The value returned in response to SubscriberAuthorization.
+     * @param string $numappel            The value returned in response to SubscriberAuthorize.
+     * @param string $numtrans            The value returned in response to SubscriberAuthorize.
      */
     public function __construct(Money $amount, $paymentReference, $subscriberReference, $numappel, $numtrans)
     {

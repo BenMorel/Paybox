@@ -7,9 +7,9 @@ use Paybox\Request;
 use Brick\Money\Money;
 
 /**
- * Authorization + Capture.
+ * Authorization only.
  */
-class AuthorizationAndCapture implements Request
+class Authorize implements Request
 {
     /**
      * @var Card
@@ -27,8 +27,10 @@ class AuthorizationAndCapture implements Request
     private $reference;
 
     /**
+     * Authorize constructor.
+     *
      * @param Card   $card      The payment card.
-     * @param Money  $amount    The amount to debit.
+     * @param Money  $amount    The amount to authorize.
      * @param string $reference The merchant reference, free field from 1 to 250 characters.
      */
     public function __construct(Card $card, Money $amount, $reference)
@@ -44,7 +46,7 @@ class AuthorizationAndCapture implements Request
     public function getValues()
     {
         return [
-            'TYPE'      => '00003',
+            'TYPE'      => '00001',
             'MONTANT'   => $this->amount->getAmount()->unscaledValue(),
             'DEVISE'    => $this->amount->getCurrency()->getNumericCode(),
             'REFERENCE' => $this->reference,

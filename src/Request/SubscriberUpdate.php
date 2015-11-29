@@ -27,6 +27,8 @@ class SubscriberUpdate implements Request
     private $reference;
 
     /**
+     * SubscriberUpdate constructor.
+     *
      * @param Card   $card      The payment card.
      * @param Money  $amount    The amount to authorize. @todo not sure yet why an amount is required.
      * @param string $reference The reference of the subscriber to update.

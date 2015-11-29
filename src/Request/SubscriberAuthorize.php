@@ -6,9 +6,9 @@ use Paybox\Request;
 use Brick\Money\Money;
 
 /**
- * Authorization + Capture on a subscriber.
+ * Authorization only on a subscriber.
  */
-class SubscriberAuthorizationAndCapture implements Request
+class SubscriberAuthorize implements Request
 {
     /**
      * @var Money
@@ -41,7 +41,7 @@ class SubscriberAuthorizationAndCapture implements Request
     private $cvv;
 
     /**
-     * SubscriberAuthorization constructor.
+     * SubscriberAuthorize constructor.
      *
      * @param Money  $amount              The amount to authorize.
      * @param string $paymentReference    The reference of the payment, free field from 1 to 250 characters
@@ -80,7 +80,7 @@ class SubscriberAuthorizationAndCapture implements Request
     public function getValues()
     {
         $values = [
-            'TYPE'      => '00053',
+            'TYPE'      => '00051',
             'MONTANT'   => $this->amount->getAmount()->unscaledValue(),
             'DEVISE'    => $this->amount->getCurrency()->getNumericCode(),
             'REFERENCE' => $this->paymentReference,

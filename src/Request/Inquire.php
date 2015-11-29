@@ -7,7 +7,7 @@ use Paybox\Request;
 /**
  * Inquiry.
  */
-class Inquiry implements Request
+class Inquire implements Request
 {
     /**
      * @inheritdoc

@@ -35,8 +35,8 @@ class Cancel implements Request
      *
      * @param Money  $amount    The captured amount of the transaction to cancel.
      * @param string $reference The merchant reference of the transaction to cancel.
-     * @param string $numappel  The value returned in response to Capture or AuthorizationAndCapture.
-     * @param string $numtrans  The value returned in response to Capture or AuthorizationAndCapture.
+     * @param string $numappel  The value returned in response to Capture or AuthorizeAndCapture.
+     * @param string $numtrans  The value returned in response to Capture or AuthorizeAndCapture.
      */
     public function __construct(Money $amount, $reference, $numappel, $numtrans)
     {

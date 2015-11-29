@@ -46,7 +46,7 @@ class SubscriberCancel implements Request
     private $numtrans;
 
     /**
-     * SubscriberAuthorization constructor.
+     * SubscriberCancel constructor.
      *
      * @param Money  $amount              The captured amount of the transaction to cancel.
      * @param string $paymentReference    The merchant reference of the transaction to cancel.
@@ -54,8 +54,8 @@ class SubscriberCancel implements Request
      *                                    This is the free field reference used when creating the subscriber.
      * @param string $token               The token returned in response to SubscriberRegister.
      * @param string $validity            The card validity date, in MMYY format.
-     * @param string $numappel            The value returned in response to SubscriberCapture or SubscriberAuthorizationAndCapture.
-     * @param string $numtrans            The value returned in response to SubscriberCapture or SubscriberAuthorizationAndCapture.
+     * @param string $numappel            The value returned in response to SubscriberCapture or SubscriberAuthorizeAndCapture.
+     * @param string $numtrans            The value returned in response to SubscriberCapture or SubscriberAuthorizeAndCapture.
      */
     public function __construct(Money $amount, $paymentReference, $subscriberReference, $token, $validity, $numappel, $numtrans)
     {

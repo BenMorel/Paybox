@@ -27,6 +27,8 @@ class TransactionWithoutAuthorization implements Request
     private $reference;
 
     /**
+     * TransactionWithoutAuthorization constructor.
+     *
      * @param Card   $card      The payment card.
      * @param Money  $amount    The amount to debit.
      * @param string $reference The merchant reference, free field from 1 to 250 characters.

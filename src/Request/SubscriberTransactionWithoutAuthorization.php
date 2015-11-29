@@ -36,6 +36,8 @@ class SubscriberTransactionWithoutAuthorization implements Request
     private $validity;
 
     /**
+     * SubscriberTransactionWithoutAuthorization constructor.
+     *
      * @param Money  $amount    The amount to debit.
      * @param string $reference The merchant reference, free field from 1 to 250 characters.
      * @param string $refabonne The subscriber reference.
