@@ -14,8 +14,6 @@ class Response
 
     /**
      * Connection to the authorization center failed or an internal error occurred.
-     *
-     * In this case, it is advised to try on the backup site.
      */
     const CONNECTION_FAILED = '00001';
 
@@ -31,8 +29,6 @@ class Response
 
     /**
      * Paybox error.
-     *
-     * In this case, it is advised to try on the backup site.
      */
     const PAYBOX_ERROR = '00003';
 
