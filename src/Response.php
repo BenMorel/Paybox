@@ -106,7 +106,7 @@ class Response
     const PAYMENT_ALREADY_DONE = '00015';
 
     /**
-     * Subscriber already exists (registration of a new subscriber).
+     * Subscriber already exists (in response to SubscriberRegister).
      */
     const SUBSCRIBER_ALREADY_EXISTS = '00016';
 
@@ -116,7 +116,7 @@ class Response
     const SUBSCRIBER_DOES_NOT_EXIST = '00017';
 
     /**
-     * Transaction not found. This can be returned for CheckTransactionExistence.
+     * Transaction not found (in response to CheckTransactionExistence).
      */
     const TRANSACTION_NOT_FOUND = '00018';
 
