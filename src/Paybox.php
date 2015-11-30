@@ -9,6 +9,13 @@ use GuzzleHttp\Client;
  */
 class Paybox
 {
+    const PAYBOX_URL           = 'https://ppps.paybox.com/PPPS.php';
+    const PAYBOX_SECONDARY_URL = 'https://ppps1.paybox.com/PPPS.php';
+    const PAYBOX_PREPROD_URL   = 'https://preprod-ppps.paybox.com/PPPS.php';
+
+    const E_TRANSACTIONS_URL         = 'https://ppps.e-transactions.fr/PPPS.php';
+    const E_TRANSACTIONS_PREPROD_URL = 'https://preprod-ppps.e-transactions.fr/PPPS.php';
+
     /**
      * The site number provided by Paybox.
      *
