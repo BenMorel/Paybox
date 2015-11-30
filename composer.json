@@ -11,13 +11,14 @@
   "license": "MIT",
   "require": {
     "php": ">=5.5",
+    "ext-hash": "*",
     "ext-openssl": "*",
     "brick/money": "dev-master",
     "guzzlehttp/guzzle": "6.*"
   },
   "require-dev": {
-    "phpunit/phpunit": "*",
-    "satooshi/php-coveralls": "dev-master"
+    "phpunit/phpunit": "5.*",
+    "satooshi/php-coveralls": "0.6.*"
   },
   "autoload": {
     "psr-4": {
