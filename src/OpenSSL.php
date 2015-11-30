@@ -8,18 +8,27 @@ namespace Paybox;
 class OpenSSL
 {
     /**
+     * The Paybox public key file.
+     *
+     * Note that the public key is the same for E-transactions from the Crédit Agricole.
+     *
+     * @see http://www1.paybox.com/wp-content/uploads/2014/03/pubkey.pem
+     */
+    const PAYBOX_PUBLIC_KEY = __DIR__ . '/../pubkey.pem';
+
+    /**
      * Checks the signature of the given message.
      *
      * It is assumed that the signature is the last parameter of the urlencoded string, whatever its name.
      *
      * @param string $message       The raw urlencoded message to check.
-     * @param string $publicKeyFile The path to the public key file to check the signature against.
+     * @param string $publicKeyFile The path to the public key file. Optional, defaults to Paybox's public key.
      *
      * @return bool True if the signature of the message is valid, false if it is invalid.
      *
      * @throws OpenSSLException If the certificate file is invalid, or an OpenSSL error occurs.
      */
-    public function checkSignature($message, $publicKeyFile)
+    public function checkSignature($message, $publicKeyFile = OpenSSL::PAYBOX_PUBLIC_KEY)
     {
         // Dequeue errors than would have been ignored by other libraries.
         // These errors are persistent across HTTP calls, and could add confusion to our error messages.
