@@ -11,6 +11,7 @@
   "license": "MIT",
   "require": {
     "php": ">=5.5",
+    "ext-openssl": "*",
     "brick/money": "dev-master",
     "guzzlehttp/guzzle": "6.*"
   },
