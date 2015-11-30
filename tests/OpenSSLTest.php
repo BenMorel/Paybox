@@ -28,6 +28,14 @@ class OpenSSLTest extends \PHPUnit_Framework_TestCase
     public function providerCheckSignature()
     {
         return [
+            ['', false],
+            ['a', false],
+            ['a=', false],
+            ['a=b', false],
+            ['a=b&', false],
+            ['a=b&c', false],
+            ['a=b&c=', false],
+            ['a=b&c=d', false],
             ['IdSession=session002&StatusPBX=Timeout&3DSTATUS=N&3DSIGNVAL=Y&3DENROLLED=Y&3DERROR=0&3DXID=ej77Ax2su6mBwEvI7v7eTWbjPBo=&ID3D=2000000267972&Check=SLGxbGYJNFMoX0ZujWWU%2fwdLbpp4MUojlcTkK3iA6wXGsiU692slTZp7PYcjzlraoU2A8AfPS9HGVHIVLbS8IYVy3uZsMnXRyWbjJybmnfL6PqTI9yjuZEG56FJVRSH2V0zb1yU2JpwG5SdDl7t3yBl2MFAiyo2UG3QTLOsy8Ao%3d', true],
             ['IdSession=session002&StatusPBX=Timeout&3DSTATUS=Y&3DSIGNVAL=Y&3DENROLLED=Y&3DERROR=0&3DXID=ej77Ax2su6mBwEvI7v7eTWbjPBo=&ID3D=2000000267972&Check=SLGxbGYJNFMoX0ZujWWU%2fwdLbpp4MUojlcTkK3iA6wXGsiU692slTZp7PYcjzlraoU2A8AfPS9HGVHIVLbS8IYVy3uZsMnXRyWbjJybmnfL6PqTI9yjuZEG56FJVRSH2V0zb1yU2JpwG5SdDl7t3yBl2MFAiyo2UG3QTLOsy8Ao%3d', false],
             ['IdSession=session002&StatusPBX=Timeout&3DSTATUS=N&3DSIGNVAL=Y&3DENROLLED=Y&3DERROR=0&3DXID=ej77Ax2su6mBwEvI7v7eTWbjPBo=&ID3D=2000000267972&Check=SLGxbGYJNFMoX0ZujWWU%2fwdLbpp4MUojlcTkK3iA6wXGsiU692slTZp7PYcjzlraoU2A8AfPS9HGVHIVLbS8IYVy3uZsMnXRyWbjJybmnfL6PqTI9yjuZEG56FJVRSH2V0zb1yU2JpwG5SdDl7t3yBl2MFAiyo2UG3QTLOsy8Bo%3d', false],
@@ -35,5 +43,14 @@ class OpenSSLTest extends \PHPUnit_Framework_TestCase
             ['IdSession=1448876207&StatusPBX=Timeout&3DSTATUS=N&3DSIGNVAL=Y&3DENROLLED=Y&3DERROR=0&3DXID=ZeA3onBxBw9dkhCjS6rGv6f+Kd4=&ID3D=2000000273403&Check=Z1S5tq60WHzdGHfeDoIdkgaqpz614Zl1qnqQo4dHiaSHx4NW%2byk8iXOj1rJ1f1L7lvGU2DtsxPvgk34dKOHDg5fOkKZiGNgkN05L10VybvjlgfwE4ryDwnQA%2fDkM1DW1aZxyvloJLVwNwyRyZuFu1QeIICLUJoXflDOHXmrvtza%3d', false],
             ['IdSession=1448876207&StatusPBX=Timeout&3DSTATUS=N&3DSIGNVAL=Y&3DENROLLED=N&3DERROR=0&3DXID=ZeA3onBxBw9dkhCjS6rGv6f+Kd4=&ID3D=2000000273403&Check=Z1S5tq60WHzdGHfeDoIdkgaqpz614Zl1qnqQo4dHiaSHx4NW%2byk8iXOj1rJ1f1L7lvGU2DtsxPvgk34dKOHDg5fOkKZiGNgkN05L10VybvjlgfwE4ryDwnQA%2fDkM1DW1aZxyvloJLVwNwyRyZuFu1QeIICLUJoXflDOHXmrvtzw%3d', false],
         ];
+    }
+
+    /**
+     * @expectedException \Paybox\OpenSSLException
+     */
+    public function testCheckSignatureWithInvalidPublicKeyFile()
+    {
+        $openssl = new OpenSSL();
+        $openssl->checkSignature('', 'non-existent-file.pem');
     }
 }
