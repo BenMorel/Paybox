@@ -30,7 +30,7 @@ class SubscriberRegister implements Request
      * SubscriberRegister constructor.
      *
      * @param Card   $card      The payment card.
-     * @param Money  $amount    The amount to authorize. @todo not sure yet why an amount is required.
+     * @param Money  $amount    The amount to authorize. An authorization is made to check the card.
      * @param string $reference The subscriber reference, free field from 1 to 250 characters.
      *                          Must be unique across all subscribers.
      */

@@ -30,7 +30,7 @@ class SubscriberUpdate implements Request
      * SubscriberUpdate constructor.
      *
      * @param Card   $card      The payment card.
-     * @param Money  $amount    The amount to authorize. @todo not sure yet why an amount is required.
+     * @param Money  $amount    The amount to authorize. An authorization is made to check the card.
      * @param string $reference The reference of the subscriber to update.
      *                          This is the free field reference used when creating the subscriber.
      */
