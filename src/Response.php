@@ -116,7 +116,7 @@ class Response
     const SUBSCRIBER_DOES_NOT_EXIST = '00017';
 
     /**
-     * Transaction not found (in response to CheckTransactionExistence).
+     * Transaction not found (in response to CheckTransactionExistence or Inquire).
      */
     const TRANSACTION_NOT_FOUND = '00018';
 
