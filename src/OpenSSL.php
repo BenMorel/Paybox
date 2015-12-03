@@ -84,6 +84,10 @@ class OpenSSL
      */
     private function parseMessage($message, $isPost)
     {
+        if ($message == '') {
+            return [];
+        }
+
         $pairs = explode('&', $message);
 
         $data = [];
