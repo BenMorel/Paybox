@@ -17,21 +17,21 @@ class Paybox
     const E_TRANSACTIONS_PREPROD_URL = 'https://preprod-ppps.e-transactions.fr/PPPS.php';
 
     /**
-     * The site number provided by Paybox.
+     * The site number.
      *
      * @var string
      */
     private $site;
 
     /**
-     * The rank number provided by Paybox.
+     * The rank number.
      *
      * @var string
      */
     private $rank;
 
     /**
-     * The internal identifier provided by Paybox.
+     * The merchant identifier.
      *
      * @var string
      */
@@ -52,9 +52,9 @@ class Paybox
     /**
      * Paybox constructor.
      *
-     * @param string $site       The site number provided by Paybox.
-     * @param string $rank       The rank number provided by Paybox.
-     * @param string $identifier The internal identifier provided by Paybox.
+     * @param string $site       The site number.
+     * @param string $rank       The rank number.
+     * @param string $identifier The merchant identifier.
      * @param string $key        The secret HMAC authentication key, in hexadecimal format.
      * @param string $url        The URL to post requests to.
      */

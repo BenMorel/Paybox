@@ -17,6 +17,8 @@ class RemoteMPI
     const E_TRANSACTIONS_PREPROD_URL = 'https://preprod-tpeweb.e-transactions.fr/cgi/RemoteMPI.cgi';
 
     /**
+     * The merchant identifier.
+     *
      * @var string
      */
     private $identifier;
