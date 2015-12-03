@@ -21,14 +21,19 @@ class OpenSSL
      *
      * It is assumed that the signature is the last parameter of the urlencoded string, whatever its name.
      *
-     * @param string $message       The raw urlencoded message to check.
+     * Messages need to be decoded in a very picky way, due to the inconsistent URL-encoding of Paybox.
+     * This is why this method accepts the raw query string (GET) or message body (POST),
+     * and not an already decoded array of key-value pairs.
+     *
+     * @param string $message       The raw message to check.
+     * @param bool   $isPost        True if the message comes from a POST request (return URL), false if it comes from a GET request (callback URL).
      * @param string $publicKeyFile The path to the public key file. Optional, defaults to Paybox's public key.
      *
      * @return bool True if the signature of the message is valid, false if it is invalid.
      *
      * @throws OpenSSLException If the certificate file is invalid, or an OpenSSL error occurs.
      */
-    public function checkSignature($message, $publicKeyFile = OpenSSL::PAYBOX_PUBLIC_KEY)
+    public function checkSignature($message, $isPost, $publicKeyFile = OpenSSL::PAYBOX_PUBLIC_KEY)
     {
         // Dequeue errors than would have been ignored by other libraries.
         // These errors are persistent across HTTP calls, and could add confusion to our error messages.
@@ -38,29 +43,71 @@ class OpenSSL
 
         $this->handleErrors($publicKey === false);
 
-        $lastAmpPos = strrpos($message, '&');
+        $data = $this->parseMessage($message, $isPost);
 
-        if ($lastAmpPos === false) {
+        if (! $data) {
             return false;
         }
 
-        $signedData = substr($message, 0, $lastAmpPos);
+        $signature    = end($data);
+        $signatureKey = key($data);
 
-        $equalsPos = strpos($message, '=', $lastAmpPos);
+        unset($data[$signatureKey]);
 
-        if ($equalsPos === false) {
-            return false;
+        $signedMessage = [];
+
+        foreach ($data as $key => $value) {
+            $signedMessage[] = $key . '=' . $value;
         }
 
-        $signature = substr($message, $equalsPos + 1);
-        $signature = urldecode($signature);
+        $signedMessage = implode('&', $signedMessage);
+
+        if ($isPost) {
+            // The data is double-URL-encoded in this case.
+            $signature = rawurldecode($signature);
+        }
+
         $signature = base64_decode($signature);
 
-        $result = openssl_verify($signedData, $signature, $publicKey);
+        $result = openssl_verify($signedMessage, $signature, $publicKey);
 
         $this->handleErrors($result == -1);
 
         return (bool) $result;
+    }
+
+    /**
+     * @param string $message
+     * @param bool   $isPost
+     *
+     * @return array
+     */
+    private function parseMessage($message, $isPost)
+    {
+        $pairs = explode('&', $message);
+
+        $data = [];
+
+        foreach ($pairs as $pair) {
+            $pos = strpos($pair, '=');
+
+            if ($pos === false) {
+                $data[$pair] = '';
+
+                continue;
+            }
+
+            $key = substr($pair, 0, $pos);
+            $value = substr($pair, $pos + 1);
+
+            if ($isPost) {
+                $data[$key] = urldecode($value);
+            } else {
+                $data[$key] = rawurldecode($value);
+            }
+        }
+
+        return $data;
     }
 
     /**
