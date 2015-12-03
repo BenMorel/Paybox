@@ -27,6 +27,13 @@ class AuthorizeAndCapture implements Request
     private $reference;
 
     /**
+     * The authentication code from 3D Secure, if set.
+     *
+     * @var string|null
+     */
+    private $id3d;
+
+    /**
      * AuthorizeAndCapture constructor.
      *
      * @param Card   $card      The payment card.
@@ -41,11 +48,23 @@ class AuthorizeAndCapture implements Request
     }
 
     /**
+     * Sets the authentication code from 3D Secure.
+     *
+     * @param string $id3d
+     *
+     * @return void
+     */
+    public function setID3D($id3d)
+    {
+        $this->id3d = $id3d;
+    }
+
+    /**
      * @inheritdoc
      */
     public function getValues()
     {
-        return [
+        $values = [
             'TYPE'      => '00003',
             'MONTANT'   => $this->amount->getAmount()->unscaledValue(),
             'DEVISE'    => $this->amount->getCurrency()->getNumericCode(),
@@ -57,5 +76,11 @@ class AuthorizeAndCapture implements Request
             // optional
 //            'AUTORISATION' => '',
         ];
+
+        if ($this->id3d !== null) {
+            $values['ID3D'] = $this->id3d;
+        }
+
+        return $values;
     }
 }

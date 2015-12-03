@@ -27,11 +27,18 @@ class Authorize implements Request
     private $reference;
 
     /**
+     * The authentication code from 3D Secure, if set.
+     *
+     * @var string|null
+     */
+    private $id3d;
+
+    /**
      * Authorize constructor.
      *
-     * @param Card   $card      The payment card.
-     * @param Money  $amount    The amount to authorize.
-     * @param string $reference The merchant reference, free field from 1 to 250 characters.
+     * @param Card        $card      The payment card.
+     * @param Money       $amount    The amount to authorize.
+     * @param string      $reference The merchant reference, free field from 1 to 250 characters.
      */
     public function __construct(Card $card, Money $amount, $reference)
     {
@@ -41,11 +48,23 @@ class Authorize implements Request
     }
 
     /**
+     * Sets c
+     *
+     * @param string $id3d
+     *
+     * @return void
+     */
+    public function setID3D($id3d)
+    {
+        $this->id3d = $id3d;
+    }
+
+    /**
      * @inheritdoc
      */
     public function getValues()
     {
-        return [
+        $values = [
             'TYPE'      => '00001',
             'MONTANT'   => $this->amount->getAmount()->unscaledValue(),
             'DEVISE'    => $this->amount->getCurrency()->getNumericCode(),
@@ -57,5 +76,11 @@ class Authorize implements Request
             // optional
 //            'AUTORISATION' => '',
         ];
+
+        if ($this->id3d !== null) {
+            $values['ID3D'] = $this->id3d;
+        }
+
+        return $values;
     }
 }

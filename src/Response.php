@@ -87,6 +87,8 @@ class Response
 
     /**
      * Invalid order reference.
+     *
+     * This is received when using an invalid ID3D number.
      */
     const INVALID_REFERENCE = '00012';
 
