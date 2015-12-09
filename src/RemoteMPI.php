@@ -17,11 +17,9 @@ class RemoteMPI
     const E_TRANSACTIONS_PREPROD_URL = 'https://preprod-tpeweb.e-transactions.fr/cgi/RemoteMPI.cgi';
 
     /**
-     * The merchant identifier.
-     *
-     * @var string
+     * @var Paybox
      */
-    private $identifier;
+    private $paybox;
 
     /**
      * @var string|null
@@ -36,11 +34,11 @@ class RemoteMPI
     /**
      * RemoteMPI constructor.
      *
-     * @param string $identifier The merchant identifier.
+     * @param Paybox $paybox
      */
-    public function __construct($identifier)
+    public function __construct(Paybox $paybox)
     {
-        $this->identifier = $identifier;
+        $this->paybox = $paybox;
     }
 
     /**
@@ -95,7 +93,7 @@ class RemoteMPI
             'CCExpDate'  => $card->getValidity(),
             'CVVCode'    => $card->getCvv(),
 
-            'IdMerchant' => $this->identifier,
+            'IdMerchant' => $this->paybox->getIdentifier(),
             'IdSession'  => $sessionId
         ];
 

@@ -4,6 +4,7 @@ namespace Paybox\Tests;
 
 use Paybox\Card;
 use Paybox\Paybox;
+use Paybox\PayboxDirect;
 use Paybox\Request\Authorize;
 use Paybox\Request\AuthorizeAndCapture;
 use Paybox\Request\Cancel;
@@ -12,28 +13,30 @@ use Paybox\Request\CheckTransactionExistence;
 use Paybox\Request\Credit;
 use Paybox\Request\Inquire;
 use Paybox\Response;
+
 use Brick\Money\Money;
 
 /**
- * Tests for the Paybox class.
+ * Live tests for Paybox Direct.
  *
  * @see http://www1.paybox.com/espace-integrateur-documentation/comptes-de-tests/
  * @see http://www1.paybox.com/espace-integrateur-documentation/cartes-de-tests/
  */
-class PayboxTest extends \PHPUnit_Framework_TestCase
+class PayboxDirectTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @return Paybox
+     * @return PayboxDirect
      */
-    private function getTestPayboxInstance()
+    private function getTestPayboxDirectInstance()
     {
-        return new Paybox(
+        $paybox = new Paybox(
             '1999888',
             '63',
             '109518543',
-            '0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF',
-            Paybox::PAYBOX_PREPROD_URL
+            '0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF'
         );
+
+        return new PayboxDirect($paybox, PayboxDirect::PAYBOX_PREPROD_URL);
     }
 
     /**
@@ -61,7 +64,7 @@ class PayboxTest extends \PHPUnit_Framework_TestCase
         $amount = Money::parse($amount);
         $reference = __FUNCTION__ . '-' . time();
 
-        $paybox = $this->getTestPayboxInstance();
+        $paybox = $this->getTestPayboxDirectInstance();
 
         $request = new Authorize($card, $amount, $reference);
         $response = $paybox->execute($request);
@@ -90,7 +93,7 @@ class PayboxTest extends \PHPUnit_Framework_TestCase
         $amount = Money::of(10, 'EUR');
         $reference = __FUNCTION__ . '-' . time();
 
-        $paybox = $this->getTestPayboxInstance();
+        $paybox = $this->getTestPayboxDirectInstance();
 
         $request = new Authorize($card, $amount, $reference);
         $response = $paybox->execute($request);
@@ -118,7 +121,7 @@ class PayboxTest extends \PHPUnit_Framework_TestCase
         $amount = Money::parse($amount);
         $reference = __FUNCTION__ . '-' . time();
 
-        $paybox = $this->getTestPayboxInstance();
+        $paybox = $this->getTestPayboxDirectInstance();
 
         $request = new AuthorizeAndCapture($card, $amount, $reference);
         $response = $paybox->execute($request);
@@ -147,7 +150,7 @@ class PayboxTest extends \PHPUnit_Framework_TestCase
         $amount = Money::of(10, 'EUR');
         $reference = __FUNCTION__ . '-' . time();
 
-        $paybox = $this->getTestPayboxInstance();
+        $paybox = $this->getTestPayboxDirectInstance();
 
         $request = new AuthorizeAndCapture($card, $amount, $reference);
         $response = $paybox->execute($request);
@@ -169,7 +172,7 @@ class PayboxTest extends \PHPUnit_Framework_TestCase
         $amount = Money::of(10, 'EUR');
         $reference = __FUNCTION__ . '-' . time();
 
-        $paybox = $this->getTestPayboxInstance();
+        $paybox = $this->getTestPayboxDirectInstance();
 
         $request = new AuthorizeAndCapture($card, $amount, $reference);
         $captureResponse = $paybox->execute($request);
@@ -193,7 +196,7 @@ class PayboxTest extends \PHPUnit_Framework_TestCase
         $amount = Money::of(10, 'EUR');
         $reference = __FUNCTION__ . '-' . time();
 
-        $paybox = $this->getTestPayboxInstance();
+        $paybox = $this->getTestPayboxDirectInstance();
 
         $request = new CheckTransactionExistence($amount, $reference);
         $response = $paybox->execute($request);
@@ -216,7 +219,7 @@ class PayboxTest extends \PHPUnit_Framework_TestCase
         $amount = Money::parse($amount);
         $reference = __FUNCTION__ . '-' . time();
 
-        $paybox = $this->getTestPayboxInstance();
+        $paybox = $this->getTestPayboxDirectInstance();
 
         $request = new Credit($card, $amount, $reference);
         $response = $paybox->execute($request);
@@ -242,7 +245,7 @@ class PayboxTest extends \PHPUnit_Framework_TestCase
         $amount = Money::of(10, 'EUR');
         $reference = __FUNCTION__ . '-' . time();
 
-        $paybox = $this->getTestPayboxInstance();
+        $paybox = $this->getTestPayboxDirectInstance();
 
         $request = new AuthorizeAndCapture($card, $amount, $reference);
         $captureResponse = $paybox->execute($request);
@@ -265,7 +268,7 @@ class PayboxTest extends \PHPUnit_Framework_TestCase
      */
     public function testInquireNonExistingTransaction()
     {
-        $paybox = $this->getTestPayboxInstance();
+        $paybox = $this->getTestPayboxDirectInstance();
 
         $request = new Inquire('0000000000');
         $response = $paybox->execute($request);
