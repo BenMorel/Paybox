@@ -2,8 +2,6 @@
 
 namespace Paybox;
 
-use Brick\Money\Money;
-
 /**
  * Paybox System creates forms to redirect the user to payment pages hosted by Paybox.
  */
@@ -53,28 +51,18 @@ class PayboxSystem
     }
 
     /**
-     * @param Money $amount     The amount to pay.
-     * @param string $reference The merchant's order reference.
-     * @param string $email     The customer's email address.
+     * @param PayboxSystemRequest $request
      *
      * @return array
      */
-    public function getPostParameters(Money $amount, $reference, $email)
+    public function getPostParameters(PayboxSystemRequest $request)
     {
-        $values = [
-            'PBX_SITE' => $this->paybox->getSite(),
-            'PBX_RANG' => $this->paybox->getRank(),
-            'PBX_IDENTIFIANT' => $this->paybox->getIdentifier(),
-            'PBX_TOTAL' => $amount->getAmount()->unscaledValue(),
-            'PBX_DEVISE' => $amount->getCurrency()->getNumericCode(),
-            'PBX_CMD' => $reference,
-            'PBX_PORTEUR' => $email,
-            'PBX_RETOUR' => 'Mt:M;Ref:R;Auto:A;Erreur:E',
-            'PBX_HASH' => 'SHA512',
-            'PBX_TIME' => gmdate('c'),
-        ];
+        $values = $request->getValues();
 
-        $values['PBX_HMAC'] = $this->paybox->hashHMAC($values);
+        $values['PBX_SITE']        = $this->paybox->getSite();
+        $values['PBX_RANG']        = $this->paybox->getRank();
+        $values['PBX_IDENTIFIANT'] = $this->paybox->getIdentifier();
+        $values['PBX_HMAC']        = $this->paybox->hashHMAC($values);
 
         return $values;
     }
