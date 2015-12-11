@@ -1,14 +1,14 @@
 <?php
 
-namespace Paybox\Request;
+namespace Paybox\PayboxDirectRequest;
 
-use Paybox\Request;
+use Paybox\PayboxDirectRequest;
 use Brick\Money\Money;
 
 /**
- * Cancels a captured transaction.
+ * Debit (Capture).
  */
-class Cancel implements Request
+class Capture implements PayboxDirectRequest
 {
     /**
      * @var Money
@@ -31,12 +31,12 @@ class Cancel implements Request
     private $numtrans;
 
     /**
-     * Cancel constructor.
+     * Capture constructor.
      *
-     * @param Money  $amount    The captured amount of the transaction to cancel.
-     * @param string $reference The merchant reference of the transaction to cancel.
-     * @param string $numappel  The value returned in response to Capture or AuthorizeAndCapture.
-     * @param string $numtrans  The value returned in response to Capture or AuthorizeAndCapture.
+     * @param Money  $amount    The amount to capture. Must be lower than or equal to the authorized amount.
+     * @param string $reference The merchant reference of the transaction to capture.
+     * @param string $numappel  The value returned in response to Authorize.
+     * @param string $numtrans  The value returned in response to Authorize.
      */
     public function __construct(Money $amount, $reference, $numappel, $numtrans)
     {
@@ -52,12 +52,12 @@ class Cancel implements Request
     public function getValues()
     {
         return [
-            'TYPE'      => '00005',
+            'TYPE'      => '00002',
             'MONTANT'   => $this->amount->getAmount()->unscaledValue(),
             'DEVISE'    => $this->amount->getCurrency()->getNumericCode(),
-            'REFERENCE' => $this->reference,
             'NUMAPPEL'  => $this->numappel,
             'NUMTRANS'  => $this->numtrans,
+            'REFERENCE' => $this->reference,
         ];
     }
 }

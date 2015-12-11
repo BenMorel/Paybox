@@ -1,14 +1,14 @@
 <?php
 
-namespace Paybox\Request;
+namespace Paybox\PayboxDirectRequest;
 
-use Paybox\Request;
+use Paybox\PayboxDirectRequest;
 use Brick\Money\Money;
 
 /**
  * Credits a subscriber's card.
  */
-class SubscriberCredit implements Request
+class SubscriberCredit implements PayboxDirectRequest
 {
     /**
      * @var Money

@@ -1,15 +1,15 @@
 <?php
 
-namespace Paybox\Request;
+namespace Paybox\PayboxDirectRequest;
 
 use Paybox\Card;
-use Paybox\Request;
+use Paybox\PayboxDirectRequest;
 use Brick\Money\Money;
 
 /**
- * Register new subscriber.
+ * Update an existing subscriber.
  */
-class SubscriberRegister implements Request
+class SubscriberUpdate implements PayboxDirectRequest
 {
     /**
      * @var Card
@@ -27,12 +27,12 @@ class SubscriberRegister implements Request
     private $reference;
 
     /**
-     * SubscriberRegister constructor.
+     * SubscriberUpdate constructor.
      *
      * @param Card   $card      The payment card.
      * @param Money  $amount    The amount to authorize. An authorization is made to check the card.
-     * @param string $reference The subscriber reference, free field from 1 to 250 characters.
-     *                          Must be unique across all subscribers.
+     * @param string $reference The reference of the subscriber to update.
+     *                          This is the free field reference used when creating the subscriber.
      */
     public function __construct(Card $card, Money $amount, $reference)
     {
@@ -47,7 +47,7 @@ class SubscriberRegister implements Request
     public function getValues()
     {
         return [
-            'TYPE'      => '00056',
+            'TYPE'      => '00057',
             'REFABONNE' => $this->reference,
             'MONTANT'   => $this->amount->getAmount()->unscaledValue(),
             'DEVISE'    => $this->amount->getCurrency()->getNumericCode(),

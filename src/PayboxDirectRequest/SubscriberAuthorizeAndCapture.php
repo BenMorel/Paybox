@@ -1,14 +1,14 @@
 <?php
 
-namespace Paybox\Request;
+namespace Paybox\PayboxDirectRequest;
 
-use Paybox\Request;
+use Paybox\PayboxDirectRequest;
 use Brick\Money\Money;
 
 /**
- * Cancel of a transaction on a subscriber.
+ * Authorization + Capture on a subscriber.
  */
-class SubscriberCancel implements Request
+class SubscriberAuthorizeAndCapture implements PayboxDirectRequest
 {
     /**
      * @var Money
@@ -36,36 +36,42 @@ class SubscriberCancel implements Request
     private $validity;
 
     /**
-     * @var string
+     * @var string|null
      */
-    private $numappel;
+    private $cvv;
 
     /**
-     * @var string
-     */
-    private $numtrans;
-
-    /**
-     * SubscriberCancel constructor.
+     * SubscriberAuthorizeAndCapture constructor.
      *
-     * @param Money  $amount              The captured amount of the transaction to cancel.
-     * @param string $paymentReference    The merchant reference of the transaction to cancel.
+     * @param Money  $amount              The amount to authorize.
+     * @param string $paymentReference    The reference of the payment, free field from 1 to 250 characters
      * @param string $subscriberReference The reference of the subscriber.
      *                                    This is the free field reference used when creating the subscriber.
      * @param string $token               The token returned in response to SubscriberRegister.
      * @param string $validity            The card validity date, in MMYY format.
-     * @param string $numappel            The value returned in response to SubscriberCapture or SubscriberAuthorizeAndCapture.
-     * @param string $numtrans            The value returned in response to SubscriberCapture or SubscriberAuthorizeAndCapture.
      */
-    public function __construct(Money $amount, $paymentReference, $subscriberReference, $token, $validity, $numappel, $numtrans)
+    public function __construct(Money $amount, $paymentReference, $subscriberReference, $token, $validity)
     {
         $this->amount              = $amount;
         $this->paymentReference    = $paymentReference;
         $this->subscriberReference = $subscriberReference;
         $this->token               = $token;
         $this->validity            = $validity;
-        $this->numappel            = $numappel;
-        $this->numtrans            = $numtrans;
+    }
+
+    /**
+     * Sets the CVV of the card for validation.
+     *
+     * This is not strictly required by the Paybox platform itself,
+     * but some banks refuse the transaction if the CVV is not set.
+     *
+     * @param string $cvv
+     *
+     * @return void
+     */
+    public function setCvv($cvv)
+    {
+        $this->cvv = $cvv;
     }
 
     /**
@@ -73,16 +79,20 @@ class SubscriberCancel implements Request
      */
     public function getValues()
     {
-        return [
-            'TYPE'      => '00055',
-            'REFABONNE' => $this->subscriberReference,
-            'REFERENCE' => $this->paymentReference,
+        $values = [
+            'TYPE'      => '00053',
             'MONTANT'   => $this->amount->getAmount()->unscaledValue(),
             'DEVISE'    => $this->amount->getCurrency()->getNumericCode(),
-            'NUMAPPEL'  => $this->numappel,
-            'NUMTRANS'  => $this->numtrans,
+            'REFERENCE' => $this->paymentReference,
+            'REFABONNE' => $this->subscriberReference,
             'PORTEUR'   => $this->token,
             'DATEVAL'   => $this->validity,
         ];
+
+        if ($this->cvv !== null) {
+            $values['CVV'] = $this->cvv;
+        }
+
+        return $values;
     }
 }

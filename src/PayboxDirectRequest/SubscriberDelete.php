@@ -1,13 +1,13 @@
 <?php
 
-namespace Paybox\Request;
+namespace Paybox\PayboxDirectRequest;
 
-use Paybox\Request;
+use Paybox\PayboxDirectRequest;
 
 /**
  * Delete a subscriber.
  */
-class SubscriberDelete implements Request
+class SubscriberDelete implements PayboxDirectRequest
 {
     /**
      * @var string

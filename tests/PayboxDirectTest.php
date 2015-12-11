@@ -5,14 +5,14 @@ namespace Paybox\Tests;
 use Paybox\Card;
 use Paybox\Paybox;
 use Paybox\PayboxDirect;
-use Paybox\Request\Authorize;
-use Paybox\Request\AuthorizeAndCapture;
-use Paybox\Request\Cancel;
-use Paybox\Request\Capture;
-use Paybox\Request\CheckTransactionExistence;
-use Paybox\Request\Credit;
-use Paybox\Request\Inquire;
-use Paybox\Response;
+use Paybox\PayboxDirectRequest\Authorize;
+use Paybox\PayboxDirectRequest\AuthorizeAndCapture;
+use Paybox\PayboxDirectRequest\Cancel;
+use Paybox\PayboxDirectRequest\Capture;
+use Paybox\PayboxDirectRequest\CheckTransactionExistence;
+use Paybox\PayboxDirectRequest\Credit;
+use Paybox\PayboxDirectRequest\Inquire;
+use Paybox\PayboxDirectResponse;
 
 use Brick\Money\Money;
 
@@ -40,10 +40,10 @@ class PayboxDirectTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param Response $response       The response to check.
-     * @param string   $expectedStatus The expected Response::* status constant.
+     * @param PayboxDirectResponse $response The response to check.
+     * @param string   $expectedStatus       The expected Response::* status constant.
      */
-    private function assertResponseStatus(Response $response, $expectedStatus)
+    private function assertResponseStatus(PayboxDirectResponse $response, $expectedStatus)
     {
         $message = sprintf('Expected response status %s, got %s', $expectedStatus, $response->getCodereponse());
         $this->assertTrue($response->is($expectedStatus), $message);
@@ -78,9 +78,9 @@ class PayboxDirectTest extends \PHPUnit_Framework_TestCase
     public function providerAuthorize()
     {
         return [
-            ['1111222233334444', '1216', '123', 'EUR 10', Response::SUCCESS],
-            ['1111222233334444', '0101', '123', 'EUR 10', Response::INVALID_EXPIRY_DATE],
-            ['1111222233335555', '1216', '123', 'EUR 10', Response::INVALID_CARD_NUMBER],
+            ['1111222233334444', '1216', '123', 'EUR 10', PayboxDirectResponse::SUCCESS],
+            ['1111222233334444', '0101', '123', 'EUR 10', PayboxDirectResponse::INVALID_EXPIRY_DATE],
+            ['1111222233335555', '1216', '123', 'EUR 10', PayboxDirectResponse::INVALID_CARD_NUMBER],
         ];
     }
 
@@ -98,12 +98,12 @@ class PayboxDirectTest extends \PHPUnit_Framework_TestCase
         $request = new Authorize($card, $amount, $reference);
         $response = $paybox->execute($request);
 
-        $this->assertResponseStatus($response, Response::SUCCESS);
+        $this->assertResponseStatus($response, PayboxDirectResponse::SUCCESS);
 
         $request = new Capture($amount, $reference, $response->getNumappel(), $response->getNumtrans());
         $response = $paybox->execute($request);
 
-        $this->assertResponseStatus($response, Response::SUCCESS);
+        $this->assertResponseStatus($response, PayboxDirectResponse::SUCCESS);
     }
 
     /**
@@ -135,9 +135,9 @@ class PayboxDirectTest extends \PHPUnit_Framework_TestCase
     public function providerAuthorizeAndCapture()
     {
         return [
-            ['1111222233334444', '1216', '123', 'EUR 10', Response::SUCCESS],
-            ['1111222233334444', '0101', '123', 'EUR 10', Response::INVALID_EXPIRY_DATE],
-            ['1111222233335555', '1216', '123', 'EUR 10', Response::INVALID_CARD_NUMBER],
+            ['1111222233334444', '1216', '123', 'EUR 10', PayboxDirectResponse::SUCCESS],
+            ['1111222233334444', '0101', '123', 'EUR 10', PayboxDirectResponse::INVALID_EXPIRY_DATE],
+            ['1111222233335555', '1216', '123', 'EUR 10', PayboxDirectResponse::INVALID_CARD_NUMBER],
         ];
     }
 
@@ -155,12 +155,12 @@ class PayboxDirectTest extends \PHPUnit_Framework_TestCase
         $request = new AuthorizeAndCapture($card, $amount, $reference);
         $response = $paybox->execute($request);
 
-        $this->assertResponseStatus($response, Response::SUCCESS);
+        $this->assertResponseStatus($response, PayboxDirectResponse::SUCCESS);
 
         $request = new Cancel($amount, $reference, $response->getNumappel(), $response->getNumtrans());
         $response = $paybox->execute($request);
 
-        $this->assertResponseStatus($response, Response::SUCCESS);
+        $this->assertResponseStatus($response, PayboxDirectResponse::SUCCESS);
     }
 
     /**
@@ -177,12 +177,12 @@ class PayboxDirectTest extends \PHPUnit_Framework_TestCase
         $request = new AuthorizeAndCapture($card, $amount, $reference);
         $captureResponse = $paybox->execute($request);
 
-        $this->assertResponseStatus($captureResponse, Response::SUCCESS);
+        $this->assertResponseStatus($captureResponse, PayboxDirectResponse::SUCCESS);
 
         $request = new CheckTransactionExistence($amount, $reference);
         $response = $paybox->execute($request);
 
-        $this->assertResponseStatus($response, Response::SUCCESS);
+        $this->assertResponseStatus($response, PayboxDirectResponse::SUCCESS);
 
         $this->assertSame($captureResponse->getNumappel(), $response->getNumappel());
         $this->assertSame($captureResponse->getNumtrans(), $response->getNumtrans());
@@ -201,7 +201,7 @@ class PayboxDirectTest extends \PHPUnit_Framework_TestCase
         $request = new CheckTransactionExistence($amount, $reference);
         $response = $paybox->execute($request);
 
-        $this->assertResponseStatus($response, Response::TRANSACTION_NOT_FOUND);
+        $this->assertResponseStatus($response, PayboxDirectResponse::TRANSACTION_NOT_FOUND);
     }
 
     /**
@@ -233,9 +233,9 @@ class PayboxDirectTest extends \PHPUnit_Framework_TestCase
     public function providerCredit()
     {
         return [
-            ['4012001037141112', '1216', '123', 'EUR 10', Response::SUCCESS],
-            ['4012001037141112', '0101', '123', 'EUR 10', Response::INVALID_EXPIRY_DATE],
-            ['4012001037141113', '1216', '123', 'EUR 10', Response::INVALID_CARD_NUMBER],
+            ['4012001037141112', '1216', '123', 'EUR 10', PayboxDirectResponse::SUCCESS],
+            ['4012001037141112', '0101', '123', 'EUR 10', PayboxDirectResponse::INVALID_EXPIRY_DATE],
+            ['4012001037141113', '1216', '123', 'EUR 10', PayboxDirectResponse::INVALID_CARD_NUMBER],
         ];
     }
 
@@ -250,12 +250,12 @@ class PayboxDirectTest extends \PHPUnit_Framework_TestCase
         $request = new AuthorizeAndCapture($card, $amount, $reference);
         $captureResponse = $paybox->execute($request);
 
-        $this->assertResponseStatus($captureResponse, Response::SUCCESS);
+        $this->assertResponseStatus($captureResponse, PayboxDirectResponse::SUCCESS);
 
         $request = new Inquire($captureResponse->getNumtrans());
         $response = $paybox->execute($request);
 
-        $this->assertResponseStatus($response, Response::SUCCESS);
+        $this->assertResponseStatus($response, PayboxDirectResponse::SUCCESS);
 
         $this->assertSame($captureResponse->getNumappel(), $response->getNumappel());
         $this->assertSame($captureResponse->getNumtrans(), $response->getNumtrans());
@@ -272,6 +272,6 @@ class PayboxDirectTest extends \PHPUnit_Framework_TestCase
 
         $request = new Inquire('0000000000');
         $response = $paybox->execute($request);
-        $this->assertResponseStatus($response, Response::TRANSACTION_NOT_FOUND);
+        $this->assertResponseStatus($response, PayboxDirectResponse::TRANSACTION_NOT_FOUND);
     }
 }

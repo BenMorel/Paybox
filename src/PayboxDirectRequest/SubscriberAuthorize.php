@@ -1,14 +1,14 @@
 <?php
 
-namespace Paybox\Request;
+namespace Paybox\PayboxDirectRequest;
 
-use Paybox\Request;
+use Paybox\PayboxDirectRequest;
 use Brick\Money\Money;
 
 /**
  * Authorization only on a subscriber.
  */
-class SubscriberAuthorize implements Request
+class SubscriberAuthorize implements PayboxDirectRequest
 {
     /**
      * @var Money

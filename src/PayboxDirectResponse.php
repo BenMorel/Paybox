@@ -5,7 +5,7 @@ namespace Paybox;
 /**
  * A response from Paybox.
  */
-class Response
+class PayboxDirectResponse
 {
     /**
      * Successful operation.

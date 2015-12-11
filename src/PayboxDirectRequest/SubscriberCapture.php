@@ -1,14 +1,14 @@
 <?php
 
-namespace Paybox\Request;
+namespace Paybox\PayboxDirectRequest;
 
-use Paybox\Request;
+use Paybox\PayboxDirectRequest;
 use Brick\Money\Money;
 
 /**
  * Debit (Capture) on a subscriber.
  */
-class SubscriberCapture implements Request
+class SubscriberCapture implements PayboxDirectRequest
 {
     /**
      * @var Money

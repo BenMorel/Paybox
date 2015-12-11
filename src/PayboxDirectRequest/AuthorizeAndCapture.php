@@ -1,15 +1,15 @@
 <?php
 
-namespace Paybox\Request;
+namespace Paybox\PayboxDirectRequest;
 
 use Paybox\Card;
-use Paybox\Request;
+use Paybox\PayboxDirectRequest;
 use Brick\Money\Money;
 
 /**
  * Authorization + Capture.
  */
-class AuthorizeAndCapture implements Request
+class AuthorizeAndCapture implements PayboxDirectRequest
 {
     /**
      * @var Card

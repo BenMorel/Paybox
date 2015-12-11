@@ -1,14 +1,14 @@
 <?php
 
-namespace Paybox\Request;
+namespace Paybox\PayboxDirectRequest;
 
-use Paybox\Request;
+use Paybox\PayboxDirectRequest;
 use Brick\Money\Money;
 
 /**
  * Updates the amount of a transaction.
  */
-class UpdateTransactionAmount implements Request
+class UpdateTransactionAmount implements PayboxDirectRequest
 {
     /**
      * @var Money

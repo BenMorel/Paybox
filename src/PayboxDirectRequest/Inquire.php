@@ -1,13 +1,13 @@
 <?php
 
-namespace Paybox\Request;
+namespace Paybox\PayboxDirectRequest;
 
-use Paybox\Request;
+use Paybox\PayboxDirectRequest;
 
 /**
  * Checks the status of a transaction.
  */
-class Inquire implements Request
+class Inquire implements PayboxDirectRequest
 {
     /**
      * @var string

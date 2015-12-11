@@ -1,14 +1,14 @@
 <?php
 
-namespace Paybox\Request;
+namespace Paybox\PayboxDirectRequest;
 
-use Paybox\Request;
+use Paybox\PayboxDirectRequest;
 use Brick\Money\Money;
 
 /**
  * Check if a transaction exists.
  */
-class CheckTransactionExistence implements Request
+class CheckTransactionExistence implements PayboxDirectRequest
 {
     /**
      * @var Money

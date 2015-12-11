@@ -5,7 +5,7 @@ namespace Paybox;
 /**
  * A request to send to Paybox, such as Authorize or Capture.
  */
-interface Request
+interface PayboxDirectRequest
 {
     /**
      * @return array

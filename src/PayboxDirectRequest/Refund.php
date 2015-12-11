@@ -1,14 +1,14 @@
 <?php
 
-namespace Paybox\Request;
+namespace Paybox\PayboxDirectRequest;
 
-use Paybox\Request;
+use Paybox\PayboxDirectRequest;
 use Brick\Money\Money;
 
 /**
  * Refunds a captured transaction.
  */
-class Refund implements Request
+class Refund implements PayboxDirectRequest
 {
     /**
      * @var Money

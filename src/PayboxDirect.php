@@ -39,13 +39,13 @@ class PayboxDirect
     }
 
     /**
-     * @param \Paybox\Request $request An instance of a Paybox request object.
+     * @param \Paybox\PayboxDirectRequest $request An instance of a Paybox request object.
      *
-     * @return \Paybox\Response The Paybox response.
+     * @return \Paybox\PayboxDirectResponse The Paybox response.
      *
      * @throws \Guzzle\Http\Exception\RequestException If the communication with the server fails.
      */
-    public function execute(Request $request)
+    public function execute(PayboxDirectRequest $request)
     {
         $values = $request->getValues();
 
@@ -66,7 +66,7 @@ class PayboxDirect
         $body = (string) $response->getBody();
         parse_str($body, $data);
 
-        return new Response($data);
+        return new PayboxDirectResponse($data);
     }
 
     /**
