@@ -27,7 +27,7 @@ class PayboxDirect
     private $url;
 
     /**
-     * PayboxSystem constructor.
+     * PayboxDirect constructor.
      *
      * @param Paybox $paybox
      * @param string $url
@@ -43,7 +43,7 @@ class PayboxDirect
      *
      * @return \Paybox\PayboxDirectResponse The Paybox response.
      *
-     * @throws \Guzzle\Http\Exception\RequestException If the communication with the server fails.
+     * @throws \GuzzleHttp\Exception\RequestException If the communication with the server fails.
      */
     public function execute(PayboxDirectRequest $request)
     {
