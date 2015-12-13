@@ -7,20 +7,20 @@ namespace Paybox;
  */
 class RemoteMPIResponse
 {
+    const STATUS_UNKNOWN               = 0;
+    const STATUS_NOT_ENROLLED          = 1;
+    const STATUS_ENROLLED_AUTH_SUCCESS = 2;
+    const STATUS_ENROLLED_AUTH_FAILURE = 3;
+
+    /**
+     * @var int
+     */
+    private $status = self::STATUS_UNKNOWN;
+
     /**
      * @var string
      */
     private $sessionId = '';
-
-    /**
-     * @var string
-     */
-    private $enrolled = '';
-
-    /**
-     * @var string
-     */
-    private $status = '';
 
     /**
      * @var string
@@ -30,22 +30,47 @@ class RemoteMPIResponse
     /**
      * RemoteMPIResponse constructor.
      *
-     * @param array $data An associative array of data as returned by the authorization servers.
+     * @param array $data An associative array of data as returned by the authentication servers.
      */
     public function __construct(array $data)
     {
-        $map = [
-            'IdSession'  => 'sessionId',
-            '3DSTATUS'   => 'status',
-            '3DENROLLED' => 'enrolled',
-            'ID3D'       => 'id3d',
-        ];
-
-        foreach ($map as $key => $field) {
-            if (isset($data[$key])) {
-                $this->{$field} = $data[$key];
-            }
+        if (isset($data['IdSession'])) {
+            $this->sessionId = $data['IdSession'];
         }
+
+        if (isset($data['ID3D'])) {
+            $this->id3d = $data['ID3D'];
+        }
+
+        if (! isset($data['3DENROLLED'])) {
+            return;
+        }
+
+        switch ($data['3DENROLLED']) {
+            case 'Y':
+                break;
+
+            case 'N':
+                $this->status = self::STATUS_NOT_ENROLLED;
+                return;
+
+            default:
+                return;
+        }
+
+        if (isset($data['3DSTATUS']) && $data['3DSTATUS'] == 'Y') {
+            $this->status = self::STATUS_ENROLLED_AUTH_SUCCESS;
+        } else {
+            $this->status = self::STATUS_ENROLLED_AUTH_FAILURE;
+        }
+    }
+
+    /**
+     * @return int
+     */
+    public function getStatus()
+    {
+        return $this->status;
     }
 
     /**
@@ -56,26 +81,6 @@ class RemoteMPIResponse
     public function getSessionId()
     {
         return $this->sessionId;
-    }
-
-    /**
-     * Returns whether the cardholder is enrolled in the 3D Secure scheme.
-     *
-     * @return bool
-     */
-    public function isEnrolled()
-    {
-        return $this->enrolled == 'Y';
-    }
-
-    /**
-     * Returns whether the 3D Secure authentication was a success.
-     *
-     * @return bool
-     */
-    public function isSuccess()
-    {
-        return $this->enrolled == 'Y' && $this->status == 'Y';
     }
 
     /**
