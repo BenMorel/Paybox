@@ -64,9 +64,8 @@ class PayboxDirect
         ]);
 
         $body = (string) $response->getBody();
-        parse_str($body, $data);
 
-        return new PayboxDirectResponse($data);
+        return new PayboxDirectResponse($body);
     }
 
     /**

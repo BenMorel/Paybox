@@ -150,6 +150,16 @@ class PayboxDirectResponse
     /**
      * @var string
      */
+    private $rawResponse;
+
+    /**
+     * @var array
+     */
+    private $rawData;
+
+    /**
+     * @var string
+     */
     private $numtrans = '';
 
     /**
@@ -205,10 +215,15 @@ class PayboxDirectResponse
     /**
      * Response constructor.
      *
-     * @param array $data An associative array of data as returned by the Paybox server.
+     * @param string $response The urlencoded key-value pairs received from the server.
      */
-    public function __construct(array $data)
+    public function __construct($response)
     {
+        parse_str($response, $data);
+
+        $this->rawResponse = $response;
+        $this->rawData     = $data;
+
         $map = [
             'NUMTRANS'     => 'numtrans',
             'NUMAPPEL'     => 'numappel',
@@ -228,6 +243,22 @@ class PayboxDirectResponse
                 $this->{$field} = $data[$key];
             }
         }
+    }
+
+    /**
+     * @return string
+     */
+    public function getRawResponse()
+    {
+        return $this->rawResponse;
+    }
+
+    /**
+     * @return array
+     */
+    public function getRawData()
+    {
+        return $this->rawData;
     }
 
     /**
