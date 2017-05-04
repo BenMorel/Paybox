@@ -142,11 +142,7 @@ class PayboxSystemRequest
         $codes = [];
 
         foreach ($currencies as $currency) {
-            if ($currency instanceof Currency) {
-                $codes[] = $currency->getCode();
-            } else {
-                $codes[] = $currency;
-            }
+            $codes[] = (string) $currency;
         }
 
         $this->values['PBX_CURRENCYDISPLAY'] = $codes;
