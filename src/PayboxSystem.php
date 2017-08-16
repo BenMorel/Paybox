@@ -34,20 +34,13 @@ class PayboxSystem
     private $paybox;
 
     /**
-     * @var string
-     */
-    private $url;
-
-    /**
      * PayboxSystem constructor.
      *
      * @param Paybox $paybox
-     * @param string $url
      */
-    public function __construct(Paybox $paybox, $url)
+    public function __construct(Paybox $paybox)
     {
         $this->paybox = $paybox;
-        $this->url    = $url;
     }
 
     /**
