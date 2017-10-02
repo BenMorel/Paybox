@@ -60,7 +60,7 @@ class SubscriberCredit implements PayboxDirectRequest
     {
         return [
             'TYPE'      => '00054',
-            'MONTANT'   => $this->amount->getAmount()->unscaledValue(),
+            'MONTANT'   => $this->amount->getMinorAmount()->toInt(),
             'DEVISE'    => $this->amount->getCurrency()->getNumericCode(),
             'REFERENCE' => $this->paymentReference,
             'REFABONNE' => $this->subscriberReference,

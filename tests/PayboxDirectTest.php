@@ -63,13 +63,13 @@ class PayboxDirectTest extends \PHPUnit_Framework_TestCase
      * @param string $cardNumber
      * @param string $validity
      * @param string $cvv
-     * @param string $amount
+     * @param array  $amount
      * @param string $expectedStatus
      */
-    public function testAuthorize($cardNumber, $validity, $cvv, $amount, $expectedStatus)
+    public function testAuthorize($cardNumber, $validity, $cvv, array $amount, $expectedStatus)
     {
         $card = new Card($cardNumber, $validity, $cvv);
-        $amount = Money::parse($amount);
+        $amount = Money::of(...$amount);
         $reference = __FUNCTION__ . '-' . time();
 
         $paybox = $this->getTestPayboxDirectInstance();
@@ -88,9 +88,9 @@ class PayboxDirectTest extends \PHPUnit_Framework_TestCase
         $exp = $this->getCardValidity();
 
         return [
-            ['1111222233334444', $exp, '123', 'EUR 10', PayboxDirectResponse::SUCCESS],
-            ['1111222233334444', '0101', '123', 'EUR 10', PayboxDirectResponse::INVALID_EXPIRY_DATE],
-            ['1111222233335555', $exp, '123', 'EUR 10', PayboxDirectResponse::INVALID_CARD_NUMBER],
+            ['1111222233334444', $exp, '123', [10, 'EUR'], PayboxDirectResponse::SUCCESS],
+            ['1111222233334444', '0101', '123', [10, 'EUR'], PayboxDirectResponse::INVALID_EXPIRY_DATE],
+            ['1111222233335555', $exp, '123', [10, 'EUR'], PayboxDirectResponse::INVALID_CARD_NUMBER],
         ];
     }
 
@@ -124,13 +124,13 @@ class PayboxDirectTest extends \PHPUnit_Framework_TestCase
      * @param string $cardNumber
      * @param string $validity
      * @param string $cvv
-     * @param string $amount
+     * @param array  $amount
      * @param string $expectedStatus
      */
-    public function testAuthorizeAndCapture($cardNumber, $validity, $cvv, $amount, $expectedStatus)
+    public function testAuthorizeAndCapture($cardNumber, $validity, $cvv, array $amount, $expectedStatus)
     {
         $card = new Card($cardNumber, $validity, $cvv);
-        $amount = Money::parse($amount);
+        $amount = Money::of(...$amount);
         $reference = __FUNCTION__ . '-' . time();
 
         $paybox = $this->getTestPayboxDirectInstance();
@@ -149,9 +149,9 @@ class PayboxDirectTest extends \PHPUnit_Framework_TestCase
         $exp = $this->getCardValidity();
 
         return [
-            ['1111222233334444', $exp, '123', 'EUR 10', PayboxDirectResponse::SUCCESS],
-            ['1111222233334444', '0101', '123', 'EUR 10', PayboxDirectResponse::INVALID_EXPIRY_DATE],
-            ['1111222233335555', $exp, '123', 'EUR 10', PayboxDirectResponse::INVALID_CARD_NUMBER],
+            ['1111222233334444', $exp, '123', [10, 'EUR'], PayboxDirectResponse::SUCCESS],
+            ['1111222233334444', '0101', '123', [10, 'EUR'], PayboxDirectResponse::INVALID_EXPIRY_DATE],
+            ['1111222233335555', $exp, '123', [10, 'EUR'], PayboxDirectResponse::INVALID_CARD_NUMBER],
         ];
     }
 
@@ -228,13 +228,13 @@ class PayboxDirectTest extends \PHPUnit_Framework_TestCase
      * @param string $cardNumber
      * @param string $validity
      * @param string $cvv
-     * @param string $amount
+     * @param array  $amount
      * @param string $expectedStatus
      */
-    public function testCredit($cardNumber, $validity, $cvv, $amount, $expectedStatus)
+    public function testCredit($cardNumber, $validity, $cvv, array $amount, $expectedStatus)
     {
         $card = new Card($cardNumber, $validity, $cvv);
-        $amount = Money::parse($amount);
+        $amount = Money::of(...$amount);
         $reference = __FUNCTION__ . '-' . time();
 
         $paybox = $this->getTestPayboxDirectInstance();
@@ -253,9 +253,9 @@ class PayboxDirectTest extends \PHPUnit_Framework_TestCase
         $exp = $this->getCardValidity();
 
         return [
-            ['4012001037141112', $exp, '123', 'EUR 10', PayboxDirectResponse::SUCCESS],
-            ['4012001037141112', '0101', '123', 'EUR 10', PayboxDirectResponse::INVALID_EXPIRY_DATE],
-            ['4012001037141113', $exp, '123', 'EUR 10', PayboxDirectResponse::INVALID_CARD_NUMBER],
+            ['4012001037141112', $exp, '123', [10, 'EUR'], PayboxDirectResponse::SUCCESS],
+            ['4012001037141112', '0101', '123', [10, 'EUR'], PayboxDirectResponse::INVALID_EXPIRY_DATE],
+            ['4012001037141113', $exp, '123', [10, 'EUR'], PayboxDirectResponse::INVALID_CARD_NUMBER],
         ];
     }
 

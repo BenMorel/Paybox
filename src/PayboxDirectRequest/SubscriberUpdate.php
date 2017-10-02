@@ -49,7 +49,7 @@ class SubscriberUpdate implements PayboxDirectRequest
         return [
             'TYPE'      => '00057',
             'REFABONNE' => $this->reference,
-            'MONTANT'   => $this->amount->getAmount()->unscaledValue(),
+            'MONTANT'   => $this->amount->getMinorAmount()->toInt(),
             'DEVISE'    => $this->amount->getCurrency()->getNumericCode(),
             'PORTEUR'   => $this->card->getNumber(),
             'DATEVAL'   => $this->card->getValidity(),

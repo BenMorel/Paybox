@@ -60,7 +60,7 @@ class SubscriberTransactionWithoutAuthorization implements PayboxDirectRequest
     {
         return [
             'TYPE'      => '00061',
-            'MONTANT'   => $this->amount->getAmount()->unscaledValue(),
+            'MONTANT'   => $this->amount->getMinorAmount()->toInt(),
             'DEVISE'    => $this->amount->getCurrency()->getNumericCode(),
             'REFERENCE' => $this->reference,
             'REFABONNE' => $this->refabonne,

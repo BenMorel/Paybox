@@ -27,7 +27,7 @@ class PayboxSystemRequest
     public function __construct(Money $amount, $reference, $email)
     {
         $this->values = [
-            'PBX_TOTAL'   => $amount->getAmount()->unscaledValue(),
+            'PBX_TOTAL'   => $amount->getMinorAmount()->toInt(),
             'PBX_DEVISE'  => $amount->getCurrency()->getNumericCode(),
             'PBX_CMD'     => $reference,
             'PBX_PORTEUR' => $email,

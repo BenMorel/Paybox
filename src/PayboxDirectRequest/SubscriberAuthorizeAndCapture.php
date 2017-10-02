@@ -81,7 +81,7 @@ class SubscriberAuthorizeAndCapture implements PayboxDirectRequest
     {
         $values = [
             'TYPE'      => '00053',
-            'MONTANT'   => $this->amount->getAmount()->unscaledValue(),
+            'MONTANT'   => $this->amount->getMinorAmount()->toInt(),
             'DEVISE'    => $this->amount->getCurrency()->getNumericCode(),
             'REFERENCE' => $this->paymentReference,
             'REFABONNE' => $this->subscriberReference,

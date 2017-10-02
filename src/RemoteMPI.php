@@ -86,7 +86,7 @@ class RemoteMPI
     public function getPostParameters(Card $card, Money $amount, $sessionId)
     {
         $parameters = [
-            'Amount'     => $amount->getAmount()->unscaledValue(),
+            'Amount'     => $amount->getMinorAmount()->toInt(),
             'Currency'   => $amount->getCurrency()->getNumericCode(),
 
             'CCNumber'   => $card->getNumber(),

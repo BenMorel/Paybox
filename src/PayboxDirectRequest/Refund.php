@@ -46,7 +46,7 @@ class Refund implements PayboxDirectRequest
     {
         return [
             'TYPE'     => '00014',
-            'MONTANT'  => $this->amount->getAmount()->unscaledValue(),
+            'MONTANT'  => $this->amount->getMinorAmount()->toInt(),
             'DEVISE'   => $this->amount->getCurrency()->getNumericCode(),
             'NUMAPPEL' => $this->numappel,
             'NUMTRANS' => $this->numtrans,

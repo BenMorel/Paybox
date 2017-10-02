@@ -53,7 +53,7 @@ class Cancel implements PayboxDirectRequest
     {
         return [
             'TYPE'      => '00005',
-            'MONTANT'   => $this->amount->getAmount()->unscaledValue(),
+            'MONTANT'   => $this->amount->getMinorAmount()->toInt(),
             'DEVISE'    => $this->amount->getCurrency()->getNumericCode(),
             'REFERENCE' => $this->reference,
             'NUMAPPEL'  => $this->numappel,

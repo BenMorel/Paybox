@@ -47,7 +47,7 @@ class TransactionWithoutAuthorization implements PayboxDirectRequest
     {
         return [
             'TYPE'      => '00012',
-            'MONTANT'   => $this->amount->getAmount()->unscaledValue(),
+            'MONTANT'   => $this->amount->getMinorAmount()->toInt(),
             'DEVISE'    => $this->amount->getCurrency()->getNumericCode(),
             'REFERENCE' => $this->reference,
             'PORTEUR'   => $this->card->getNumber(),

@@ -66,7 +66,7 @@ class AuthorizeAndCapture implements PayboxDirectRequest
     {
         $values = [
             'TYPE'      => '00003',
-            'MONTANT'   => $this->amount->getAmount()->unscaledValue(),
+            'MONTANT'   => $this->amount->getMinorAmount()->toInt(),
             'DEVISE'    => $this->amount->getCurrency()->getNumericCode(),
             'REFERENCE' => $this->reference,
             'PORTEUR'   => $this->card->getNumber(),

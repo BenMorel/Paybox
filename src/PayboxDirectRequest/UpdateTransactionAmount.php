@@ -60,7 +60,7 @@ class UpdateTransactionAmount implements PayboxDirectRequest
     {
         return [
             'TYPE'         => '00013',
-            'MONTANT'      => $this->amount->getAmount()->unscaledValue(),
+            'MONTANT'      => $this->amount->getMinorAmount()->toInt(),
             'DEVISE'       => $this->amount->getCurrency()->getNumericCode(),
             'REFERENCE'    => $this->reference,
             'NUMAPPEL'     => $this->numappel,
