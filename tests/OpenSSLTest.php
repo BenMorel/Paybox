@@ -4,10 +4,12 @@ namespace Paybox\Tests;
 
 use Paybox\OpenSSL;
 
+use PHPUnit\Framework\TestCase;
+
 /**
  * Tests for the OpenSSL class.
  */
-class OpenSSLTest extends \PHPUnit_Framework_TestCase
+class OpenSSLTest extends TestCase
 {
     /**
      * @dataProvider providerCheckSignature

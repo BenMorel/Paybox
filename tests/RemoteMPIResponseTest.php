@@ -4,10 +4,12 @@ namespace Paybox\Tests;
 
 use Paybox\RemoteMPIResponse;
 
+use PHPUnit\Framework\TestCase;
+
 /**
  * Tests for the RemoteMPIResponse class.
  */
-class RemoteMPIResponseTest extends \PHPUnit_Framework_TestCase
+class RemoteMPIResponseTest extends TestCase
 {
     /**
      * @dataProvider providerResponse

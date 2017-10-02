@@ -16,13 +16,15 @@ use Paybox\PayboxDirectResponse;
 
 use Brick\Money\Money;
 
+use PHPUnit\Framework\TestCase;
+
 /**
  * Live tests for Paybox Direct.
  *
  * @see http://www1.paybox.com/espace-integrateur-documentation/comptes-de-tests/
  * @see http://www1.paybox.com/espace-integrateur-documentation/cartes-de-tests/
  */
-class PayboxDirectTest extends \PHPUnit_Framework_TestCase
+class PayboxDirectTest extends TestCase
 {
     /**
      * Returns a valid MMYY string for today's date.
