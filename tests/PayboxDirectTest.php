@@ -25,6 +25,14 @@ use Brick\Money\Money;
 class PayboxDirectTest extends \PHPUnit_Framework_TestCase
 {
     /**
+     * Returns a valid MMYY string for today's date.
+     */
+    private function getCardValidity()
+    {
+        return gmdate('my', time() + 86400);
+    }
+
+    /**
      * @return PayboxDirect
      */
     private function getTestPayboxDirectInstance()
@@ -77,10 +85,12 @@ class PayboxDirectTest extends \PHPUnit_Framework_TestCase
      */
     public function providerAuthorize()
     {
+        $exp = $this->getCardValidity();
+
         return [
-            ['1111222233334444', '1216', '123', 'EUR 10', PayboxDirectResponse::SUCCESS],
+            ['1111222233334444', $exp, '123', 'EUR 10', PayboxDirectResponse::SUCCESS],
             ['1111222233334444', '0101', '123', 'EUR 10', PayboxDirectResponse::INVALID_EXPIRY_DATE],
-            ['1111222233335555', '1216', '123', 'EUR 10', PayboxDirectResponse::INVALID_CARD_NUMBER],
+            ['1111222233335555', $exp, '123', 'EUR 10', PayboxDirectResponse::INVALID_CARD_NUMBER],
         ];
     }
 
@@ -89,7 +99,9 @@ class PayboxDirectTest extends \PHPUnit_Framework_TestCase
      */
     public function testCapture()
     {
-        $card = new Card('1111222233334444', '1216', '123');
+        $exp = $this->getCardValidity();
+
+        $card = new Card('1111222233334444', $exp, '123');
         $amount = Money::of(10, 'EUR');
         $reference = __FUNCTION__ . '-' . time();
 
@@ -134,10 +146,12 @@ class PayboxDirectTest extends \PHPUnit_Framework_TestCase
      */
     public function providerAuthorizeAndCapture()
     {
+        $exp = $this->getCardValidity();
+
         return [
-            ['1111222233334444', '1216', '123', 'EUR 10', PayboxDirectResponse::SUCCESS],
+            ['1111222233334444', $exp, '123', 'EUR 10', PayboxDirectResponse::SUCCESS],
             ['1111222233334444', '0101', '123', 'EUR 10', PayboxDirectResponse::INVALID_EXPIRY_DATE],
-            ['1111222233335555', '1216', '123', 'EUR 10', PayboxDirectResponse::INVALID_CARD_NUMBER],
+            ['1111222233335555', $exp, '123', 'EUR 10', PayboxDirectResponse::INVALID_CARD_NUMBER],
         ];
     }
 
@@ -146,7 +160,9 @@ class PayboxDirectTest extends \PHPUnit_Framework_TestCase
      */
     public function testCancel()
     {
-        $card = new Card('1111222233334444', '1216', '123');
+        $exp = $this->getCardValidity();
+
+        $card = new Card('1111222233334444', $exp, '123');
         $amount = Money::of(10, 'EUR');
         $reference = __FUNCTION__ . '-' . time();
 
@@ -168,7 +184,9 @@ class PayboxDirectTest extends \PHPUnit_Framework_TestCase
      */
     public function testCheckExistingTransaction()
     {
-        $card = new Card('1111222233334444', '1216', '123');
+        $exp = $this->getCardValidity();
+
+        $card = new Card('1111222233334444', $exp, '123');
         $amount = Money::of(10, 'EUR');
         $reference = __FUNCTION__ . '-' . time();
 
@@ -232,16 +250,20 @@ class PayboxDirectTest extends \PHPUnit_Framework_TestCase
      */
     public function providerCredit()
     {
+        $exp = $this->getCardValidity();
+
         return [
-            ['4012001037141112', '1216', '123', 'EUR 10', PayboxDirectResponse::SUCCESS],
+            ['4012001037141112', $exp, '123', 'EUR 10', PayboxDirectResponse::SUCCESS],
             ['4012001037141112', '0101', '123', 'EUR 10', PayboxDirectResponse::INVALID_EXPIRY_DATE],
-            ['4012001037141113', '1216', '123', 'EUR 10', PayboxDirectResponse::INVALID_CARD_NUMBER],
+            ['4012001037141113', $exp, '123', 'EUR 10', PayboxDirectResponse::INVALID_CARD_NUMBER],
         ];
     }
 
     public function testInquire()
     {
-        $card = new Card('1111222233334444', '1216', '123');
+        $exp = $this->getCardValidity();
+
+        $card = new Card('1111222233334444', $exp, '123');
         $amount = Money::of(10, 'EUR');
         $reference = __FUNCTION__ . '-' . time();
 
