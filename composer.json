@@ -13,7 +13,7 @@
     "php": ">=7.1",
     "ext-hash": "*",
     "ext-openssl": "*",
-    "brick/money": "0.2.*",
+    "brick/money": "0.2.* || 0.3.* || 0.4.*",
     "guzzlehttp/guzzle": "6.*"
   },
   "require-dev": {
